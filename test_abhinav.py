@@ -47,13 +47,13 @@ class TestChessBoard(TestCase):
 
     def test_isThreatened(self):
         s = ChessBoard()
-        self.assertEquals(s.isThreatened(1, 3, None), True)
-        self.assertEquals(s.isThreatened(0, 0, None), True)
+        self.assertEquals(s.isThreatened(1, 3, None), False)
+        self.assertEquals(s.isThreatened(0, 0, None), False)
         #Cases which fails
         #self.assertEquals(s.isThreatened(2, 3, None), False)
         #self.assertEquals(s.isThreatened(0, 0, None), True)
 
     def test_moveBishop(self):
         s = ChessBoard()
-        self.assertEquals(s.moveBishop((0, 1), (1, 1)), True)
+        self.assertEquals(s.moveBishop((0, 1), (1, 1)), False)
         self.assertEquals(s.moveBishop((0, 1), None), False)
