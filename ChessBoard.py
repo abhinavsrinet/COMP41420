@@ -835,10 +835,11 @@ class ChessBoard:
         Return False if move is out of range.
         """
         move += 1
-        if move > len(self._state_stack):
+        if move > len(self._state_stack) | move < 1:
             return False
-        if move < 1:
-            return False
+       # Removed Two if checks and added the checks in a single condition -- Abhinav Singh
+       # if move < 1:
+        #    return False
 
         self._state_stack_pointer = move
         self.loadCurState()
@@ -1218,13 +1219,15 @@ class ChessBoard:
         """
         Print the current board layout.
         """
+        print "    A B C D E F G H"
         print "  +-----------------+"
         rank = 8
         for l in self._board:
-            print "%d | %s %s %s %s %s %s %s %s |" % (rank, l[0], l[1], l[2], l[3], l[4], l[5], l[6], l[7])
+            print "%d | %s %s %s %s %s %s %s %s | %d" % (rank, l[0], l[1], l[2], l[3], l[4], l[5], l[6], l[7], rank)
             rank -= 1
         print "  +-----------------+"
-        print "    A B C D E F G H"
+        print "    A B C D E F G H\n"
+        # Updated Board layout with adding columns and rows -- Abhinav Singh
 
     def printLastTextMove(self, format=1):
         """
