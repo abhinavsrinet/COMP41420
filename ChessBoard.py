@@ -77,8 +77,8 @@ class ChessBoard:
     _state_stack_pointer = 0
 
     # all moves, stored to make it easier to build textmoves
-    #[piece,from,to,takes,promotion,check/checkmate,specialmove]
-    #["KQRNBP",(fx,fy),(tx,ty),True/False,"QRNB"/None,"+#"/None,0-5]
+    # [piece,from,to,takes,promotion,check/checkmate,specialmove]
+    # ["KQRNBP",(fx,fy),(tx,ty),True/False,"QRNB"/None,"+#"/None,0-5]
     _cur_move = [None, None, None, False, None, None, 0]
     _moves = []
 
@@ -104,7 +104,7 @@ class ChessBoard:
         self._game_result,
         self._fifty)
 
-        #turn,wkc,wqc,bkc,bqc,epx,epy,game_result,fifty
+        # turn,wkc,wqc,bkc,bqc,epx,epy,game_result,fifty
         s = "%s%d%d%d%d%d%d%d%d:%d" % d
 
         return s
@@ -304,7 +304,7 @@ class ChessBoard:
                         return True
         return False
 
-    #-----------------------------------------------------------------
+    # -----------------------------------------------------------------
 
     def traceValidMoves(self, fromPos, dirs, maxSteps=8):
         moves = []
@@ -608,10 +608,10 @@ class ChessBoard:
         self.clearEP()
 
         if self._board[toPos[1]][toPos[0]] == ".":
-            self._fifty+=1
+            self._fifty += 1
         else:
-            self._fifty=0
-            self._cur_move[3]=True
+            self._fifty = 0
+            self._cur_move[3] = True
 
         self._board[toPos[1]][toPos[0]] = self._board[fromPos[1]][fromPos[0]]
         self._board[fromPos[1]][fromPos[0]] = "."
@@ -639,10 +639,10 @@ class ChessBoard:
         self.clearEP()
 
         if self._board[toPos[1]][toPos[0]] == ".":
-            self._fifty+=1
+            self._fifty += 1
         else:
-            self._fifty=0
-            self._cur_move[3]=True
+            self._fifty = 0
+            self._cur_move[3] = True
 
         self._board[toPos[1]][toPos[0]] = self._board[fromPos[1]][fromPos[0]]
         self._board[fromPos[1]][fromPos[0]] = "."
@@ -670,10 +670,10 @@ class ChessBoard:
             if self._turn == 1:
                 return (None, 4, 0, 2, 0, None)
 
-        files = {"a":0, "b":1, "c":2, "d":3, "e":4, "f":5, "g":6, "h":7}
-        ranks = {"8":0, "7":1, "6":2, "5":3, "4":4, "3":5, "2":6, "1":7}
+        files = {"a": 0, "b": 1, "c": 2, "d": 3, "e": 4, "f": 5, "g": 6, "h": 7}
+        ranks = {"8": 0, "7": 1, "6": 2, "5": 3, "4": 4, "3": 5, "2": 6, "1": 7}
 
-        # Clean up the textmove
+        # Clean up the text move
         "".join(txt.split("e.p."))
         t = []
         for ch in txt:
@@ -681,14 +681,14 @@ class ChessBoard:
                 continue
             t.append(ch)
 
-        if len(t)<2:
+        if len(t) < 2:
             return None
 
         # Get promotion if any
         if t[-1] in ('Q', 'R', 'N', 'B'):
-            promotion = {'Q':1, 'R':2, 'N':3, 'B':4}[t.pop()]
+            promotion = {'Q': 1, 'R': 2, 'N': 3, 'B': 4}[t.pop()]
 
-        if len(t)<2:
+        if len(t) < 2:
             return None
 
         # Get the destination
@@ -716,7 +716,7 @@ class ChessBoard:
         return (h_piece, h_file, h_rank, dest_x, dest_y, promotion)
 
     def _formatTextMove(self, move, format):
-        #piece, from, to, take, promotion, check
+        # piece, from, to, take, promotion, check
 
         piece = move[0]
         fpos = tuple(move[1])
@@ -787,9 +787,9 @@ class ChessBoard:
             res = "%s%s%s%s%s%s%s%s" % (piece, hint_f, hint_r, tc, files[tpos[0]], ranks[tpos[1]], pt, check)
         return res
 
-    #----------------------------------------------------------------------------
+    # ----------------------------------------------------------------------------
     # PUBLIC METHODS
-    #----------------------------------------------------------------------------
+    # ----------------------------------------------------------------------------
 
     def resetBoard(self):
         """
@@ -822,7 +822,7 @@ class ChessBoard:
 
     def getMoveCount(self):
         """
-        Returns the number of halfmoves in the stack.
+        Returns the number of half moves in the stack.
         Zero (0) means no moves has been made.
         """
         return len(self._state_stack)-1
@@ -838,7 +838,7 @@ class ChessBoard:
         Goto the specified halfmove. Zero (0) is before the first move.
         Return False if move is out of range.
         """
-        move+=1
+        move += 1
         if move > len(self._state_stack):
             return False
         if move < 1:
@@ -856,7 +856,7 @@ class ChessBoard:
 
     def gotoLast(self):
         """
-        Goto after the last knwon move.
+        Goto after the last known move.
         """
         self._state_stack_pointer = len(self._state_stack)
         self.loadCurState()
@@ -942,11 +942,11 @@ class ChessBoard:
     def getReason(self):
         """
         Returns the reason to why addMove returned False.
-        1=INAVLID_MOVE,2=INVALID_COLOR,3=INVALID_FROM_LOCATION,4=INVALID_TO_LOCATION,5=MUST_SET_PROMOTION,5=GAME_IS_OVER
+        1= INAVLID_MOVE,2=INVALID_COLOR,3=INVALID_FROM_LOCATION,4=INVALID_TO_LOCATION,5=MUST_SET_PROMOTION,5=GAME_IS_OVER
         """
         return self._reason
 
-    def getValidMoves(self,location):
+    def getValidMoves(self, location):
         """
         Returns a list of valid moves. (ex [ [3,4], [3, 5], [3, 6] ... ] ) If there isn't a valid piece on that location or the piece on the selected
         location hasn't got any valid moves an empty list is returned.
@@ -1004,37 +1004,37 @@ class ChessBoard:
         fx, fy = fromPos
         tx, ty = toPos
 
-        self._cur_move[1]=fromPos
-        self._cur_move[2]=toPos
+        self._cur_move[1] = fromPos
+        self._cur_move[2] = toPos
 
-        #check invalid coordinates
+        # check invalid coordinates
         if fx < 0 or fx > 7 or fy < 0 or fy > 7:
             self._reason = self.INVALID_FROM_LOCATION
             return False
 
-        #check invalid coordinates
+        # check invalid coordinates
         if tx < 0 or tx > 7 or ty < 0 or ty > 7:
             self._reason = self.INVALID_TO_LOCATION
             return False
 
-        #check if any move at all
-        if fx==tx and fy==ty:
+        # check if any move at all
+        if fx == tx and fy == ty:
             self._reason = self.INVALID_TO_LOCATION
             return False
 
-        #check if piece on location
+        # check if piece on location
         if self.isFree(fx, fy):
             self._reason = self.INVALID_FROM_LOCATION
             return False
 
-        #check color of piece
+        # check color of piece
         if self.getColor(fx, fy) != self._turn:
             self._reason = self.INVALID_COLOR
             return False
 
         # Call the correct handler
         p = self._board[fy][fx].upper()
-        self._cur_move[0]=p
+        self._cur_move[0] = p
         if p == 'P':
             if not self.movePawn((fx, fy), (tx, ty)):
                 if not self._reason:
@@ -1069,11 +1069,11 @@ class ChessBoard:
             self._turn = self.WHITE
 
         if self.isCheck():
-            self._cur_move[5]="+"
+            self._cur_move[5] = "+"
 
         if not self.hasAnyValidMoves():
             if self.isCheck():
-                self._cur_move[5]="#"
+                self._cur_move[5] = "#"
                 if self._turn == self.WHITE:
                     self.endGame(self.BLACK_WIN)
                 else:
@@ -1103,7 +1103,7 @@ class ChessBoard:
         4=KING_CASTLE_MOVE (Castling on the king side.)
         5=QUEEN_CASTLE_MOVE (Castling on the queen side.)
         """
-        if self._state_stack_pointer<=1: # No move has been done at thos pointer
+        if self._state_stack_pointer <= 1:  # No move has been done at thos pointer
             return -1
 
         self.undo()
@@ -1184,7 +1184,7 @@ class ChessBoard:
         Returns a list of all moves done so far in Algebraic chess notation.
         Returns None if no moves has been made.
         """
-        if self._state_stack_pointer<=1: # No move has been done at this pointer
+        if self._state_stack_pointer <=1:  # No move has been done at this pointer
             return None
 
         res = []
@@ -1209,7 +1209,7 @@ class ChessBoard:
         Returns the latest move as Algebraic chess notation.
         Returns None if no moves has been made.
         """
-        if self._state_stack_pointer<=1: # No move has been done at thos pointer
+        if self._state_stack_pointer <= 1:  # No move has been done at thos pointer
             return None
 
         self.undo()
@@ -1226,7 +1226,7 @@ class ChessBoard:
         rank = 8
         for l in self._board:
             print "%d | %s %s %s %s %s %s %s %s |" % (rank, l[0], l[1], l[2], l[3], l[4], l[5], l[6], l[7])
-            rank-=1
+            rank -= 1
         print "  +-----------------+"
         print "    A B C D E F G H"
 
@@ -1264,16 +1264,16 @@ class FEN:
         fparts = fen.split()
         newstate = ""
 
-        #BOARD
+        # BOARD
         for c in fparts[0]:
             if c in "kqrnbpKQRNBP":
                 newstate += c
             elif c in "12345678":
                 newstate += '.' * int(c)
-        #TURN
+        # TURN
         newstate += str("wb".index(fparts[1]))
 
-        #CASTLING
+        # CASTLING
         kq = "KQkq"
         for p in kq:
             if p in fparts[2]:
@@ -1281,18 +1281,18 @@ class FEN:
             else:
                 newstate += "0"
 
-        #EN PASSANT
+        # EN PASSANT
         if len(fparts[3]) == 2:
             newstate += str("abcdefgh".index(fparts[3][0].lower()))
             newstate += str("87654321".index(fparts[3][1]))
         else:
             newstate += "00"
 
-        #GAME RESULT
+        # GAME RESULT
         newstate+="0"
 
-        #HALF COUNT
-        newstate+=":%s" % fparts[4]
+        # HALF COUNT
+        newstate += ":%s" % fparts[4]
 
         chessboard_obj._state_stack.append(newstate)
         chessboard_obj._state_stack_pointer = 1
@@ -1325,12 +1325,12 @@ class FEN:
             cnt = 0; res = ""
             for c in row:
                 if c == ".":
-                    cnt+=1
+                    cnt += 1
                 else:
                     if cnt:
                         res += str(cnt);
-                        cnt=0
-                    res+=c
+                        cnt = 0
+                    res += c
             if cnt:
                 res += str(cnt)
             rows.append(res)
@@ -1353,9 +1353,9 @@ class FEN:
             if turn == "b" and (chessboard_obj._board[y][x-1] == 'p' or chessboard_obj._board[y][x+1] == 'p'):
                 ep = "%s%s" % ( ("abcdefgh")[x], ("87654321")[y+1])
             elif turn == "w" and (chessboard_obj._board[y][x-1] == 'P' or chessboard_obj._board[y][x+1] == 'P'):
-                ep = "%s%s" % ( ("abcdefgh")[x], ("87654321")[y-1])
+                ep = "%s%s" % (("abcdefgh")[x], ("87654321")[y-1])
 
-        move = (chessboard_obj._state_stack_pointer+1)/2
+        move = (chessboard_obj._state_stack_pointer + 1)/2
 
         return "%s %s %s %s %s %d" % (board, turn, kq, ep, fifty, move)
 
