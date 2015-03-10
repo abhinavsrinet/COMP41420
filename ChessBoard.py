@@ -835,7 +835,7 @@ class ChessBoard:
         Return False if move is out of range.
         """
         move += 1
-        if move > len(self._state_stack) | move < 1:
+        if move > len(self._state_stack) or move < 1:
             return False
        # Removed Two if checks and added the checks in a single condition -- Abhinav Singh
        # if move < 1:
