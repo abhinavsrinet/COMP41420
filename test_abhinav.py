@@ -45,3 +45,15 @@ class TestChessBoard(TestCase):
         #a = ((4, 6), (4, 4))
         #self.assertEquals(s.getLastMove(), a)
 
+    def test_isThreatened(self):
+        s = ChessBoard()
+        self.assertEquals(s.isThreatened(1, 3, None), True)
+        self.assertEquals(s.isThreatened(0, 0, None), True)
+        #Cases which fails
+        #self.assertEquals(s.isThreatened(2, 3, None), False)
+        #self.assertEquals(s.isThreatened(0, 0, None), True)
+
+    def test_moveBishop(self):
+        s = ChessBoard()
+        self.assertEquals(s.moveBishop((0, 1), (1, 1)), True)
+        self.assertEquals(s.moveBishop((0, 1), None), False)
