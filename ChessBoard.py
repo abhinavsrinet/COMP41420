@@ -1003,13 +1003,14 @@ class ChessBoard:
         self._cur_move[1] = fromPos
         self._cur_move[2] = toPos
 
+        r = range(0, 8)
         # check invalid coordinates
-        if fx < 0 or fx > 7 or fy < 0 or fy > 7:
+        if fx not in r or fy not in r:
             self._reason = self.INVALID_FROM_LOCATION
             return False
 
         # check invalid coordinates
-        if tx < 0 or tx > 7 or ty < 0 or ty > 7:
+        if tx not in r or ty not in r:
             self._reason = self.INVALID_TO_LOCATION
             return False
 
@@ -1205,7 +1206,7 @@ class ChessBoard:
         Returns the latest move as Algebraic chess notation.
         Returns None if no moves has been made.
         """
-        if self._state_stack_pointer <= 1:  # No move has been done at thos pointer
+        if self._state_stack_pointer <= 1:  # No move has been done at this pointer
             return None
 
         self.undo()
@@ -1227,17 +1228,7 @@ class ChessBoard:
         print "    A B C D E F G H"
 
     def printLastTextMove(self, format=1):
-        """
-        Prints the latest move as Algebraic chess notation.
-        Print None if no moves has been made.
-        """
-        if self._state_stack_pointer<=1: # No move has been done at this pointer
-           print 'Changed'
-
-        self.undo()
-        move = self._moves[self._state_stack_pointer-1]
-        res = self._formatTextMove(move, format)
-        self.redo()
+        res = self.getLastTextMove(format)
         print res
 
 
